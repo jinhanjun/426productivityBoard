@@ -1,8 +1,47 @@
-
-
 var $boardContainer = document.querySelector('.container');
 
 var board = new Board();
+
+var objPeople = [
+  {username: "jason", password:"jason"}
+];
+
+function loginuser(){
+  var username = document.getElementById("username").value;
+  var password = document.getElementById("password").value;
+  for(let i=0; i<objPeople.length; i++){
+    if(username == objPeople[i].username && password == objPeople[i].password){
+      alert(username + " is logged in!");
+      return true;
+    } else if(username == objPeople[i].username && password != objPeople[i].password){
+      alert("Incorrect username or password, or no user account exists");
+      return false;
+    } else if(username != objPeople[i].username && password == objPeople[i].password){
+      alert("Incorrect username or password, or no user account exists");
+      return false;
+    }
+  }
+  document.getElementById("temporaryusername").value = username;
+
+}
+
+function newuser(){
+  var newusername = document.getElementById("newusername").value;
+  var newpassword = document.getElementById("newpassword").value;
+  for(let i=0; i<objPeople.length; i++){
+    if(newusername == objPeople[i].username){
+      alert("Username already exists, please login or choose a new username")
+      return;
+    }
+  }
+  var newuser = {
+    username: newusername,
+    password: newpassword
+  }
+  objPeople.push(newuser);
+  alert("Welcome " + newusername)
+  document.getElementById("temporaryusername").value = username;
+}
 
 function handleListCreate() {
   var listTitle = prompt('New list title') || '';
@@ -96,5 +135,12 @@ function renderBoard() {
   $addListContainer.appendChild($addListButton);
   $boardContainer.appendChild($addListContainer);
 }
+board.addList("To Do");
+board.addList("Upcoming");
+board.addList("Doing");
+board.addList("Done");
 
 renderBoard();
+
+
+
